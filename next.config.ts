@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   generateBuildId: async () => {
-    return process.env.GIT_HASH ?? "";
+    return process.env.GIT_HASH || "local-build";
   },
 };
 
