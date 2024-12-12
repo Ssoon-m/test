@@ -24,7 +24,7 @@ export default function VersionChecker() {
   useEffect(() => {
     if (currentBuildId && latestBuildId && currentBuildId !== latestBuildId) {
       alert("새 버전이 배포되었습니다. 페이지를 새로고침합니다.");
-      // window.location.reload();
+      // window.location.reload();sdf
     }
   }, [currentBuildId, latestBuildId]);
 
