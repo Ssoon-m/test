@@ -12,6 +12,7 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   // .next/BUILD_ID 파일의 경로를 읽음
+  //
   const buildId = fs.readFileSync(
     path.join(process.cwd(), ".next/BUILD_ID"),
     "utf8"
