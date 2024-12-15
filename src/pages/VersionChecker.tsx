@@ -27,6 +27,9 @@ export default function VersionChecker() {
     return () => window.removeEventListener("focus", handleFocus);
   }, []);
 
+  console.log("current : ", buildIds.current);
+  console.log("latest : ", buildIds.latest);
+
   // 버전 비교 및 새로고침
   useEffect(() => {
     if (
