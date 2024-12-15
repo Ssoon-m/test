@@ -7,26 +7,37 @@ const getBuildVersion = async () => {
 };
 
 export default function VersionChecker() {
-  const [currentBuildId, setCurrentBuildId] = useState<string | null>(null);
-  const [latestBuildId, setLatestBuildId] = useState<string | null>(null);
+  const [buildIds, setBuildIds] = useState({
+    current: null as string | null,
+    latest: null as string | null,
+  });
+
+  // 빌드 버전 가져와서 상태 업데이트
+  const fetchAndSetBuildVersion = async (key: "current" | "latest") => {
+    const buildId = await getBuildVersion();
+    setBuildIds((prev) => ({ ...prev, [key]: buildId }));
+  };
+
   useEffect(() => {
-    getBuildVersion().then((buildId) => setCurrentBuildId(buildId));
-    const handleFocusBuildVersion = () => {
-      getBuildVersion().then((buildId) => setLatestBuildId(buildId));
-    };
-    window.addEventListener("focus", handleFocusBuildVersion);
-    return () => window.removeEventListener("focus", handleFocusBuildVersion);
+    fetchAndSetBuildVersion("current");
+
+    const handleFocus = () => fetchAndSetBuildVersion("latest");
+    window.addEventListener("focus", handleFocus);
+
+    return () => window.removeEventListener("focus", handleFocus);
   }, []);
 
-  console.log("currentBuildId: ", currentBuildId);
-  console.log("latestBuildId: ", latestBuildId);
-
+  // 버전 비교 및 새로고침
   useEffect(() => {
-    if (currentBuildId && latestBuildId && currentBuildId !== latestBuildId) {
+    if (
+      buildIds.current &&
+      buildIds.latest &&
+      buildIds.current !== buildIds.latest
+    ) {
       alert("새 버전이 배포되었습니다. 페이지를 새로고침합니다.");
-      // window.location.reload();sdf
+      window.location.reload();
     }
-  }, [currentBuildId, latestBuildId]);
+  }, [buildIds]);
 
   return null;
 }
