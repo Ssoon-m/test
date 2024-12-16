@@ -17,6 +17,7 @@ export default function VersionChecker() {
     const buildId = await getBuildVersion();
     setBuildIds((prev) => ({ ...prev, [key]: buildId }));
   };
+  //
 
   useEffect(() => {
     fetchAndSetBuildVersion("current");
