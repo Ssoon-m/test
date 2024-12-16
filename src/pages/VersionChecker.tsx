@@ -20,7 +20,10 @@ export default function VersionChecker() {
 
   useEffect(() => {
     fetchAndSetBuildVersion("current");
-    const handleFocus = () => fetchAndSetBuildVersion("latest");
+    const handleFocus = () => {
+      fetchAndSetBuildVersion("latest");
+      console.log("focus!");
+    };
     window.addEventListener("focus", handleFocus);
 
     return () => window.removeEventListener("focus", handleFocus);
